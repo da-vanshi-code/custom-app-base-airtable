@@ -2,30 +2,20 @@ import { TokenGate } from '@/components/TokenGate';
 import { getSession } from '@/utils/session';
 import {StatusDropdown} from '@/components/StatusDropDown';
 import {Status, Task} from '@/components/TaskView';
+import { copilotApi } from 'copilot-node-sdk';
 
 import { getTaskLists, updateTaskStatus } from '@/utils/airtable';
 
-interface ContentState {
-  taskList: Task[];
-}
 
 async /* use client */ function Content({ searchParams }: { searchParams: SearchParams }) {
-  const data = await getSession(searchParams);
 
+  const data = await getSession(searchParams);
   let taskList: Task[] = [];
 
-  const loadTasks = async () => {
-    console.log("Here")
-    taskList = await getTaskLists();
-    console.log(taskList)
-  };
-
-  const handleStatusChange = async (taskId: string, newStatus: Status) => {
-      await updateTaskStatus(taskId, newStatus);
-      loadTasks(); // Optionally optimize by updating local state instead of reloading
-  };
 
   taskList = await getTaskLists();
+
+  console.log(data)
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

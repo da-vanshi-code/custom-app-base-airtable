@@ -4,20 +4,7 @@ import {Task, Status, Priority} from '@/components/TaskView';
 
 const base = new Airtable({ apiKey: 'patqH7Emhly9Sorle.d2c4b17431561902566e052733e42da1326aabb86fb3397351a6b7898ea555c1' }).base('appF3Tt4Eu9b8Ccjw');
 
-/*
-interface Task {
-  task: string;
-  company: string;
-  description: string;
-  assignedTo: string;
-  deadline: Date;
-  status: Status;
-  priority: Priority;
-}
-*/
-
 export async function getTaskLists(): Promise<Task[]> {
-// export const getTaskLists = async (): Promise<Task[]> => {
     try {
         const records = await base('Basic Airtable').select({
             view: 'tasks'
@@ -36,9 +23,16 @@ export async function getTaskLists(): Promise<Task[]> {
         }));
 
         return Tasks
-    } catch (error) {
+    } catch (error: unknown) {
         console.log(error);
-        throw new Error('Failed to fetch tasks');
+    
+        // Check if the error is an instance of Error and then throw its message
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        } else {
+            // If it's not an Error instance, handle it as a general error
+            throw new Error("An unexpected error occurred");
+        }
     }
 };
 

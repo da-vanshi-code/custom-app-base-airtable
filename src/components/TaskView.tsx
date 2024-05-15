@@ -1,11 +1,12 @@
 import React from 'react';
 
 export enum Status {
-  Done = 'Done',
+  Complete = 'Complete',
   InProgress = 'In progress',
-  Blocked = 'Blocked',
   Kickoff = 'Kickoff',
-  Delayed = 'Delayed'
+  Planning = 'Planning',
+  Delayed = 'Delayed',
+  ToDo = 'ToDo'
 }
 
 export enum Priority {
